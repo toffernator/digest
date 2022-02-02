@@ -1,19 +1,18 @@
 package main
 
 import (
-	"log"
-
+	"github.com/gin-gonic/gin"
 	"github.com/toffernator/digest/news"
 )
 
 func main() {
-	readers := map[string]news.Reader{
-		news.DR: news.NewDrReader(),
+	r := gin.Default()
+
+	newsGroup := r.Group("/news")
+	{
+		newsGroup.GET("/", news.AllArticlesHandler)
+		newsGroup.GET("/:src", news.ArticlesFromHandler)
 	}
 
-	newsController := news.NewController(readers)
-
-	for _, a := range newsController.AllArticles() {
-		log.Println(a)
-	}
+	r.Run(":5000")
 }
