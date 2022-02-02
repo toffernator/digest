@@ -10,9 +10,9 @@ func main() {
 
 	newsGroup := r.Group("/news")
 	{
-		newsGroup.GET("/", news.AllArticlesHandler)
+		newsGroup.GET("", news.AllArticlesHandler)
 		newsGroup.GET("/:src", news.ArticlesFromHandler)
 	}
 
-	r.Run(":5000")
+	r.Run(":8080")
 }

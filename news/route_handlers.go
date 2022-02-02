@@ -11,9 +11,19 @@ func AllArticlesHandler(c *gin.Context) {
 }
 
 func ArticlesFromHandler(c *gin.Context) {
-	if articles, err := ArticlesFrom(c.Param("src")); err != nil {
+	src := c.Param("src")
+
+	_, found := readers[src]
+
+	if !found {
+		c.String(http.StatusNotFound, "404 page not found")
+		return
+	}
+
+	if articles, err := ArticlesFrom("dr"); err == nil {
 		c.JSON(http.StatusOK, articles)
 	} else {
-		c.AbortWithError(http.StatusNotFound, err)
+		c.String(http.StatusInternalServerError, "500 internal server error")
+		c.AbortWithError(http.StatusInternalServerError, err)
 	}
 }
