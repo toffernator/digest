@@ -5,7 +5,8 @@ import (
 )
 
 var readers map[string]Reader = map[string]Reader{
-	DR: DrReader,
+	DR:       DrReader,
+	GUARDIAN: GuardianReader,
 }
 
 func AllArticles() []Article {

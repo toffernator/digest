@@ -1,7 +1,8 @@
 package news
 
 const (
-	DR = "dr"
+	DR       = "dr"
+	GUARDIAN = "guardian"
 )
 
 const (

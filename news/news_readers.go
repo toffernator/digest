@@ -2,6 +2,7 @@ package news
 
 import (
 	"github.com/mmcdole/gofeed"
+	"github.com/toffernator/digest/news/guardian"
 )
 
 type Reader func() []Article
@@ -21,6 +22,26 @@ func DrReader() []Article {
 		}
 
 		articles[i] = article
+	}
+
+	return articles
+}
+
+func GuardianReader() []Article {
+	resp, err := guardian.Get()
+	if err != nil {
+		return make([]Article, 0)
+	}
+
+	articles := make([]Article, len(resp.Data.Results))
+	for i, a := range resp.Data.Results {
+		articles[i] = Article{
+			Title:   a.WebTitle,
+			Summary: "",
+			Author:  "",
+			Date:    &a.WebPublicationDate,
+			Url:     a.WebURL,
+		}
 	}
 
 	return articles
