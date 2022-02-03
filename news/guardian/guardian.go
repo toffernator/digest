@@ -11,16 +11,16 @@ import (
 
 const URL = "https://content.guardianapis.com"
 
-func Get() (Response, error) {
+func Get() (*Response, error) {
 	target := "https://content.guardianapis.com/search?" + apiKeyPayload().Encode()
 
 	var resp Response
 	err := utils.Get(target, &resp)
 	if err != nil {
-		return Response{}, err
+		return nil, err
 	}
 
-	return resp, err
+	return &resp, err
 }
 
 func apiKeyPayload() url.Values {

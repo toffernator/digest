@@ -1,27 +1,27 @@
 package news
 
 import (
-	"github.com/mmcdole/gofeed"
+	"github.com/toffernator/digest/news/dr"
 	"github.com/toffernator/digest/news/guardian"
 )
 
 type Reader func() []Article
 
 func DrReader() []Article {
-	fp := gofeed.NewParser()
-	feed, _ := fp.ParseURL("https://www.dr.dk/nyheder/service/feeds/senestenyt")
+	resp, err := dr.Get()
+	if err != nil {
+		return make([]Article, 0)
+	}
 
-	articles := make([]Article, len(feed.Items))
-	for i, a := range feed.Items {
-		article := Article{
+	articles := make([]Article, len(resp.Items))
+	for i, a := range resp.Items {
+		articles[i] = Article{
 			Title:   a.Title,
 			Summary: a.Description,
 			Author:  "",
 			Date:    a.PublishedParsed,
 			Url:     a.Link,
 		}
-
-		articles[i] = article
 	}
 
 	return articles
