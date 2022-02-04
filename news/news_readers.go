@@ -16,11 +16,11 @@ func DrReader() []Article {
 	articles := make([]Article, len(resp.Items))
 	for i, a := range resp.Items {
 		articles[i] = Article{
-			Title:   a.Title,
-			Summary: a.Description,
-			Author:  "",
-			Date:    a.PublishedParsed,
-			Url:     a.Link,
+			Title: a.Title,
+			Tags:  []string{"Latest News"},
+			Src:   "DR",
+			Date:  a.PublishedParsed,
+			Url:   a.Link,
 		}
 	}
 
@@ -36,11 +36,11 @@ func GuardianReader() []Article {
 	articles := make([]Article, len(resp.Data.Results))
 	for i, a := range resp.Data.Results {
 		articles[i] = Article{
-			Title:   a.WebTitle,
-			Summary: "",
-			Author:  "",
-			Date:    &a.WebPublicationDate,
-			Url:     a.WebURL,
+			Title: a.WebTitle,
+			Tags:  []string{a.SectionName},
+			Src:   "The Guardian",
+			Date:  &a.WebPublicationDate,
+			Url:   a.WebURL,
 		}
 	}
 
